@@ -19,7 +19,7 @@
  */
 function dateToTimestamp(date) {
   const dateObj = new Date(date);
-  // источник решений: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime#%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9_%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80
+
   const timestamp = dateObj.getTime();
 
   return timestamp;
@@ -36,14 +36,12 @@ function dateToTimestamp(date) {
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
 function getTime(date) {
-  // источник решений: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getHours#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B0_gethours
   let hours = date.getHours();
-  // источник решений: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getMinutes#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B0_getminutes
+
   let minutes = date.getMinutes();
-  // источник решений:https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getSeconds#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B0_getseconds
+
   let seconds = date.getSeconds();
 
-  // Если количество hours, minutes, seconds меньше 10, то добавляется перед этим 0
   hours = hours < 10 ? `0${hours}` : hours;
   minutes = minutes < 10 ? `0${minutes}` : minutes;
   seconds = seconds < 10 ? `0${seconds}` : seconds;
@@ -64,7 +62,7 @@ function getTime(date) {
  */
 function getDayName(date) {
   const dateObj = new Date(date);
-  // массив називание дни. Из-за: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCDay#%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%89%D0%B0%D0%B5%D0%BC%D0%BE%D0%B5_%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5
+
   const days = [
     'Sunday',
     'Monday',
@@ -74,7 +72,7 @@ function getDayName(date) {
     'Friday',
     'Saturday',
   ];
-  // источник решений: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCDay#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B0_getutcday
+
   const day = dateObj.getUTCDay();
 
   return days[day];
@@ -94,13 +92,11 @@ function getDayName(date) {
 function getNextFriday(date) {
   const nextDate = new Date(date);
   const day = nextDate.getUTCDay();
-  // Вычисляет количество дней, которые нужно добавить к указанной дате, чтобы получить следующую пятницу. Если указанная дата уже является пятницей, то добавляется 7 дней, чтобы получить следующую пятницу
+
   const daysToAdd = (5 - day + 7) % 7 || 7;
 
-  // Добавляет вычисленное количество дней к указанной дате.
   nextDate.setUTCDate(nextDate.getUTCDate() + daysToAdd);
 
-  // Устанавливает время
   nextDate.setUTCHours(0, 0, 0, 0);
 
   return nextDate;
@@ -119,8 +115,7 @@ function getNextFriday(date) {
  */
 function getCountDaysInMonth(month, year) {
   const nextMonth = new Date(year, month, 1);
-  // истоник: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate#%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5
-  // Устанавливает дату на один день назад, что соответствует последнему дню текущего месяца.
+
   nextMonth.setDate(nextMonth.getDate() - 1);
 
   return nextMonth.getDate();
@@ -142,7 +137,7 @@ function getCountDaysOnPeriod(dateStart, dateEnd) {
   const endDate = new Date(dateEnd);
 
   const diff = endDate - startDate;
-  // Преобразуется разница из миллисекунд в дни, округляет вниз до ближайшего целого числа и добавляет 1
+
   return Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
 }
 
@@ -167,7 +162,7 @@ function isDateInPeriod(date, period) {
   const dateObj = new Date(date);
   const startDate = new Date(period.start);
   const endDate = new Date(period.end);
-  // Если указанная дата находится в заданном периоде true, и false наоборот.
+
   return dateObj >= startDate && dateObj <= endDate;
 }
 
@@ -185,18 +180,16 @@ function isDateInPeriod(date, period) {
 function formatDate(date) {
   const dateObj = new Date(date);
 
-  // Для Форматировть дату в формате “MM/DD/YYYY,”.
   let formattedDate = `${
     dateObj.getUTCMonth() + 1
   }/${dateObj.getUTCDate()}/${dateObj.getUTCFullYear()}, `;
 
-  // Получать данные в формате UTC.
   let hours = dateObj.getUTCHours();
   let minutes = dateObj.getUTCMinutes();
   let seconds = dateObj.getUTCSeconds();
 
   let period = 'AM';
-  // Преобразует часы в 12-часовой формате и устанавливает период дня (‘AM’ или ‘PM’).
+
   if (hours >= 12) {
     period = 'PM';
     if (hours > 12) {
@@ -205,10 +198,10 @@ function formatDate(date) {
   } else if (hours === 0) {
     hours = 12;
   }
-  // Добавляет перед minutes, seconds 0  если они меньше 10
+
   minutes = minutes < 10 ? `0${minutes}` : minutes;
   seconds = seconds < 10 ? `0${seconds}` : seconds;
-  // Добавляет отформатированное время к дате
+
   formattedDate += `${hours}:${minutes}:${seconds} ${period}`;
 
   return formattedDate;
@@ -228,15 +221,13 @@ function formatDate(date) {
  */
 function getCountWeekendsInMonth(month, year) {
   const daysInMonth = new Date(year, month, 0).getDate();
-  // счетчик выходных дней
+
   let weekendDays = 0;
-  // Цикл, который проходит каждый день в месяце
+
   for (let day = 1; day <= daysInMonth; day += 1) {
-    // новый объект для каждого дня в месяце
     const currentDay = new Date(year, month - 1, day);
-    // Проверяет текущий день субботой или воскресеньем
+
     if (currentDay.getDay() === 0 || currentDay.getDay() === 6) {
-      // Если текущий день  суббота или воскресение, увел. счетчик .
       weekendDays += 1;
     }
   }
@@ -260,15 +251,11 @@ function getCountWeekendsInMonth(month, year) {
 function getWeekNumberByDate(date) {
   const tempDate = new Date(date.getTime());
 
-  // Устанавливает эту дату на 1 января указанного года
   tempDate.setMonth(0, 1);
-  // Получает день недели
   let firstDay = tempDate.getDay();
   if (firstDay !== 1) {
-    // Преобразует день недели в формат, где понедельник равен 1, воскресенье равно 7
     firstDay = firstDay === 0 ? 7 : firstDay;
   }
-  // Вычисляет разницу между указанной датой и 1 января в днях, добавляет номер дня недели для 1 января, делит на 7 и округляет вверх, чтобы получить номер недели
   const weekNumber = Math.ceil(((date - tempDate) / 86400000 + firstDay) / 7);
 
   return weekNumber;
@@ -287,9 +274,8 @@ function getWeekNumberByDate(date) {
  */
 function getNextFridayThe13th(date) {
   const nextDate = new Date(date.getTime());
-  // Цикл найти дата которая является пятницей 13-го числа
+
   do {
-    // Увеличивает на один день.
     nextDate.setDate(nextDate.getDate() + 1);
   } while (nextDate.getDay() !== 5 || nextDate.getDate() !== 13);
 
@@ -308,9 +294,8 @@ function getNextFridayThe13th(date) {
  * Date(2024, 10, 10) => 4
  */
 function getQuarter(date) {
-  // источник: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getMonth#%D0%B2%D0%BE%D0%B7%D0%B2%D1%80%D0%B0%D1%89%D0%B0%D0%B5%D0%BC%D0%BE%D0%B5_%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5
   const month = date.getMonth();
-  // Делит номер месяца на 3 и округляет вниз, чтобы получить номер квартала, затем добавляет 1, чтобы привести кварталы к обычной нумерации
+
   return Math.floor(month / 3) + 1;
 }
 
@@ -333,21 +318,16 @@ function getQuarter(date) {
  * { start: '01-01-2024', end: '10-01-2024' }, 1, 1 => ['01-01-2024', '03-01-2024', '05-01-2024', '07-01-2024', '09-01-2024']
  */
 function getWorkSchedule(period, countWorkDays, countOffDays) {
-  // Создают новые объекты для начала и конца периода
   const startDate = new Date(period.start.split('-').reverse().join('-'));
   const endDate = new Date(period.end.split('-').reverse().join('-'));
 
-  // Копия начальная дата
   const currentDate = new Date(startDate);
 
-  // массив для хранения рабочего графика
   const workSchedule = [];
   let workDays = 0;
   let offDays = 0;
 
-  // Цикл, который продолжается, пока текущая дата не превысит конечную дат
   while (currentDate <= endDate) {
-    // Если количество рабочих дней < количества заданного рабочих дней, добавляет текущую дату в рабочий график и увеличивает счетчик рабочих дней
     if (workDays < countWorkDays) {
       const day =
         currentDate.getDate() < 10
@@ -360,17 +340,15 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
       const year = currentDate.getFullYear();
       workSchedule.push(`${day}-${month}-${year}`);
       workDays += 1;
-
-      // Если количество выходных дней < заданного количества выходных дней, увеличивает счетчик выходных дней
     } else if (offDays < countOffDays) {
       offDays += 1;
     }
-    // Если количество рабочих и выходных дней достигло заданных значений, сбрасывает счетчики рабочих и выходных дней
+
     if (workDays === countWorkDays && offDays === countOffDays) {
       workDays = 0;
       offDays = 0;
     }
-    // Увеличивает текущую дату
+
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
@@ -390,21 +368,19 @@ function getWorkSchedule(period, countWorkDays, countOffDays) {
  * Date(2020, 2, 1) => true
  */
 function isLeapYear(date) {
-  // источник: https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear#%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80_%D0%B8%D1%81%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%B0_getfullyear
   const year = date.getFullYear();
-  // Если год не делится на 4 без остатка, не является високосным и возвращается false
+
   if (year % 4 !== 0) {
     return false;
   }
-  // Если год делится на 4, а не делится на 100 без остатка, является високосным и возвращается true
+
   if (year % 100 !== 0) {
     return true;
   }
-  // Если год делится на 100, а не делится на 400 без остатка, не является високосным и возвращается false
+
   if (year % 400 !== 0) {
     return false;
   }
-  // Если год делится на 400 без остатка, является високосным и возвращается true
   return true;
 }
 
